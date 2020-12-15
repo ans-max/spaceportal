@@ -32,7 +32,7 @@ func ApodHandler(writer http.ResponseWriter, request *http.Request) {
 
 }
 
-func Log(handler http.Handler) http.Handler {
+func logHandler(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("%s:%s:%s:%s\n", r.RemoteAddr, r.UserAgent(), r.Method, r.URL.Path)
 		handler.ServeHTTP(w, r)
@@ -45,7 +45,7 @@ func main() {
 	mux.HandleFunc("/apod", ApodHandler)
 	mux.Handle("/news", rh)
 	log.Println("Listening in port 9090. . .")
-	err := http.ListenAndServe(":9090", Log(mux))
+	err := http.ListenAndServe(":9090", logHandler(mux))
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}

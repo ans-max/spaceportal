@@ -45,8 +45,8 @@ func main() {
 	mux.HandleFunc("/apod", ApodHandler)
 	mux.Handle("/news", rh)
 	log.Println("Listening in port 9090. . .")
-	err := http.ListenAndServe(":9090", logHandler(mux))
+	err := http.ListenAndServeTLS(":9090", "certs/apod.crt", "certs/apod.key", logHandler(mux))
 	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
+		log.Fatal("ListenAndServeTLS: ", err)
 	}
 }

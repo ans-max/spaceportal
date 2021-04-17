@@ -1,11 +1,10 @@
 package main
 
 import (
-
+	"encoding/json"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"encoding/json"
 )
 
 const (
@@ -28,7 +27,7 @@ func LookUpAPOD(d string) (jresp APODResponce) {
 	req, _ := http.NewRequest("GET", apod_end, nil)
 	q := req.URL.Query()
 	q.Add("api_key", apikey)
-	q.Add("date", d )
+	q.Add("date", d)
 	req.URL.RawQuery = q.Encode()
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
@@ -42,13 +41,6 @@ func LookUpAPOD(d string) (jresp APODResponce) {
 
 	json.Unmarshal(data, &jsonresponce)
 
-	return jsonresponce 	
-	
+	return jsonresponce
+
 }
-
-//func main() {//
-
-//jsonresponce := LookUpAPOD()
-//fmt.Println("Explanation: ", jsonresponce.Explanation)//
-
-//}

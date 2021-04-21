@@ -1,0 +1,6 @@
+{
+    "apod":{
+        "Apikey":"CTowbyv9K3mxAdPCrTU4c7mdytwgiia9iS6oFsC9",
+        "apod_end":"https://api.nasa.gov/planetary/apod"
+    }
+}

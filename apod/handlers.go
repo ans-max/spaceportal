@@ -15,7 +15,6 @@ const (
 
 func ApodHandler(writer http.ResponseWriter, request *http.Request) {
 	var date string
-	var jresp APODResponce
 	currentTime := time.Now()
 	switch request.Method {
 	case "GET":
@@ -27,7 +26,7 @@ func ApodHandler(writer http.ResponseWriter, request *http.Request) {
 			date = request.FormValue("date")
 		}
 	}
-	jresp.LookUpAPOD(date)
+	jresp := LookUpAPOD(date)
 	page := template.Must(template.ParseFiles("templates/apod.html"))
 	page.Execute(writer, jresp)
 
@@ -40,14 +39,14 @@ func logHandler(handler http.Handler) http.Handler {
 	})
 }
 
-func StartApod {
+func StartApod() {
 
 	mux := http.NewServeMux()
 	rh := http.RedirectHandler("https://timesofindia.indiatimes.com", 307)
 	mux.HandleFunc("/apod", ApodHandler)
 	mux.Handle("/news", rh)
 	log.Println("Listening in port 9090. . .")
-	err := http.ListenAndServeTLS(":9090", "certs/apod.crt", "certs/apod.key", logHandler(mux))
+	err := http.ListenAndServeTLS(":9090", "../certs/apod.crt", "../certs/apod.key", logHandler(mux))
 	if err != nil {
 		log.Fatal("ListenAndServeTLS: ", err)
 	}

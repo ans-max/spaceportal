@@ -1,4 +1,4 @@
-package apod
+package main
 
 import (
 	"encoding/json"
@@ -16,13 +16,15 @@ type Config struct {
 	} `json:"apod"`
 }
 
-func (c Config) LoadConfig(file string) {
+func LoadConfig(file string) Config {
+	var c Config
 	configfile, err := os.Open(file)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 	jsonParser := json.NewDecoder(configfile)
 	jsonParser.Decode(&c)
+	return c
 }
 
 type APODResponce struct {
@@ -35,12 +37,12 @@ type APODResponce struct {
 	Url             string `json:"url"`
 }
 
-func (a APODResponce) LookUpAPOD(d string) {
-	var c Config
-	c.LoadConfig("settings.json")
-	req, _ := http.NewRequest("GET", config.Apod.Apod_end, nil)
+func LookUpAPOD(d string) APODResponce {
+	var a APODResponce
+	c := LoadConfig("../settings.json")
+	req, _ := http.NewRequest("GET", c.Apod.Apod_end, nil)
 	q := req.URL.Query()
-	q.Add("api_key", config.Apod.Apikey)
+	q.Add("api_key", c.Apod.Apikey)
 	q.Add("date", d)
 	req.URL.RawQuery = q.Encode()
 	res, err := http.DefaultClient.Do(req)
@@ -54,7 +56,6 @@ func (a APODResponce) LookUpAPOD(d string) {
 	}
 
 	json.Unmarshal(data, &a)
-
-	return jsonresponce
+	return a
 
 }

@@ -51,9 +51,7 @@ func shutdown(writer http.ResponseWriter, req *http.Request) {
 func StartApod(port string) {
 
 	mux := http.NewServeMux()
-	rh := http.RedirectHandler("https://timesofindia.indiatimes.com", 307)
 	mux.HandleFunc("/apod", ApodHandler)
-	mux.Handle("/news", rh)
 	mux.HandleFunc("/shutdown", shutdown)
 	log.Printf("Listening in port %s. . .", port)
 	err := http.ListenAndServeTLS(port, "certs/apod.crt", "certs/apod.key", logHandler(mux))

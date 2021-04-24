@@ -1,4 +1,4 @@
-package main
+package apod
 
 import (
 	"encoding/json"
@@ -9,17 +9,22 @@ import (
 	"os"
 )
 
-const (
-	apikey   = "CTowbyv9K3mxAdPCrTU4c7mdytwgiia9iS6oFsC9"
-	apod_end = "https://api.nasa.gov/planetary/apod"
-)
-
 type Config struct {
 	Apod struct {
 		Apikey   string `json:"apikey"`
 		Apod_end string `json:"apod_end"`
 	} `json:"apod"`
 }
+
+func (c Config) LoadConfig(file string) {
+	configfile, err := os.Open(file)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	jsonParser := json.NewDecoder(configfile)
+	jsonParser.Decode(&c)
+}
+
 type APODResponce struct {
 	Title           string `json:"title"`
 	Date            string `json:"date"`
@@ -30,20 +35,9 @@ type APODResponce struct {
 	Url             string `json:"url"`
 }
 
-func LoadConfig(file string) Config {
-	var config Config
-	configfile, err := os.Open(file)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	jsonParser := json.NewDecoder(configfile)
-	jsonParser.Decode(&config)
-	return config
-}
-
-func LookUpAPOD(d string) (jresp APODResponce) {
-	var jsonresponce APODResponce
-	config := LoadConfig("settings.json")
+func (a APODResponce) LookUpAPOD(d string) {
+	var c Config
+	c.LoadConfig("settings.json")
 	req, _ := http.NewRequest("GET", config.Apod.Apod_end, nil)
 	q := req.URL.Query()
 	q.Add("api_key", config.Apod.Apikey)
@@ -59,7 +53,7 @@ func LookUpAPOD(d string) (jresp APODResponce) {
 		log.Fatal("Error :", err)
 	}
 
-	json.Unmarshal(data, &jsonresponce)
+	json.Unmarshal(data, &a)
 
 	return jsonresponce
 

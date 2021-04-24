@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	//"os"
+	"os"
 	"time"
 )
 
@@ -44,14 +44,19 @@ func logHandler(handler http.Handler) http.Handler {
 	})
 }
 
-func StartApod() {
+func shutdown(writer http.ResponseWriter, req *http.Request) {
+	os.Exit(0)
+}
+
+func StartApod(port string) {
 
 	mux := http.NewServeMux()
 	rh := http.RedirectHandler("https://timesofindia.indiatimes.com", 307)
 	mux.HandleFunc("/apod", ApodHandler)
 	mux.Handle("/news", rh)
-	log.Println("Listening in port 9090. . .")
-	err := http.ListenAndServeTLS(":9090", "certs/apod.crt", "certs/apod.key", logHandler(mux))
+	mux.HandleFunc("/shutdown", shutdown)
+	log.Printf("Listening in port %s. . .", port)
+	err := http.ListenAndServeTLS(port, "certs/apod.crt", "certs/apod.key", logHandler(mux))
 	if err != nil {
 		log.Fatal("ListenAndServeTLS: ", err)
 	}

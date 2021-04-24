@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	fmt.Println("Starting APOD server at port 9090")
-	apod.StartApod()
+	fmt.Println("Starting APOD server at port :9090")
+	apod.StartApod(":9090")
 }

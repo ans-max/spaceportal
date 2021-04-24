@@ -44,14 +44,14 @@ func logHandler(handler http.Handler) http.Handler {
 	})
 }
 
-func StartApod() {
+func StartApod(port int) {
 
 	mux := http.NewServeMux()
 	rh := http.RedirectHandler("https://timesofindia.indiatimes.com", 307)
 	mux.HandleFunc("/apod", ApodHandler)
 	mux.Handle("/news", rh)
-	log.Println("Listening in port 9090. . .")
-	err := http.ListenAndServeTLS(":9090", "certs/apod.crt", "certs/apod.key", logHandler(mux))
+	log.Printf("Listening in port %d. . .", port)
+	err := http.ListenAndServeTLS(port, "certs/apod.crt", "certs/apod.key", logHandler(mux))
 	if err != nil {
 		log.Fatal("ListenAndServeTLS: ", err)
 	}

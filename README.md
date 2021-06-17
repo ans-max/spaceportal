@@ -3,6 +3,7 @@ Nasa Apod App in Golang
 
 The code needs a the certs and settings.json to be mapped to the root dir of the app
 
+API_KEY can be recived free from nasa "https://api.nasa.gov/"
 
 format for settings.json
 

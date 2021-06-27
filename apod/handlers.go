@@ -54,7 +54,7 @@ func StartApod(port string) {
 	mux.HandleFunc("/apod", ApodHandler)
 	mux.HandleFunc("/shutdown", shutdown)
 	log.Printf("Listening in port %s. . .", port)
-	err := http.ListenAndServeTLS(port, "certs/apod.crt", "certs/apod.key", logHandler(mux))
+	err := http.ListenAndServeTLS(port, "/app/certs/apod.crt", "/app/certs/apod.key", logHandler(mux))
 	if err != nil {
 		log.Fatal("ListenAndServeTLS: ", err)
 	}

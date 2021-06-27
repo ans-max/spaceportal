@@ -39,7 +39,7 @@ type APODResponce struct {
 
 func LookUpAPOD(d string) APODResponce {
 	var a APODResponce
-	c := LoadConfig("settings.json")
+	c := LoadConfig("/app/settings.json")
 	req, _ := http.NewRequest("GET", c.Apod.Apod_end, nil)
 	q := req.URL.Query()
 	q.Add("api_key", c.Apod.Apikey)

@@ -19,4 +19,4 @@ WORKDIR /app
 RUN go build -o main main.go
 ## Our start command which kicks off
 ## our newly created binary executable
-CMD ["/app/main"]
+CMD ["./main"]

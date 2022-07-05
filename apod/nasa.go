@@ -22,8 +22,9 @@ func LoadConfig(file string) Config {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	jsonParser := json.NewDecoder(configfile)
-	jsonParser.Decode(&c)
+	defer configfile.Close()
+	byteValue, _ := ioutil.ReadAll(configfile)
+	json.Unmarshal(byteValue, &c)
 	return c
 }
 

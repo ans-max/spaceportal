@@ -16,10 +16,6 @@ const (
 
 func ApodHandler(writer http.ResponseWriter, request *http.Request) {
 	var date string
-	//wd, err := os.Getwd()
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
 	currentTime := time.Now()
 	switch request.Method {
 	case "GET":

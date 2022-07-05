@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Astronomy Picture Of The Day</title>
 	<!-- Bootstrap -->
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
 	<link href="https://fonts.googleapis.com/css2?family=Red+Rose:wght@300;400&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap" rel="stylesheet">
 </head>
+
 <body>
 	<h2 style="text-align:center;font-family:Red Rose"><a href="/apod">Astronomy Picture Of The Day</a></h2>
 	<h5 style="text-align:center"><u>{{ .Title }}</u></h5>
@@ -19,24 +22,25 @@
 			<iframe class="embed-responsive-item" src="{{.Url}}" allowfullscreen></iframe>
 		</div>
 		{{ else }}
-		<span class ="border border-white">
+		<span class="border border-white">
 			<div class="Responsive image text-center">
-				<a href="{{ .Hdurl}}"><img src="{{ .Url }}" class="img-fluid rounded" alt="{{ .Title }}" ></a>
-			</span>
-		</div>
-		{{ end }}  
+				<a href="{{ .Hdurl}}"><img src="{{ .Url }}" class="img-fluid rounded" alt="{{ .Title }}"></a>
+		</span>
+	</div>
+	{{ end }}
 	</div>
 	<div class="container">
-		<span class ="border border-white">
+		<span class="border border-white">
 			<p style="font-family:Merriweather;font-size:120%">{{.Date}}</p>
-			<p class="text-justify lead" style="font-family:Red Rose;font-size:115%">{{ .Explanation }}</p>
+			<p class="text-justify lead" style="font-family:Red Rose;font-size:118%">{{ .Explanation }}</p>
 		</span>
 	</div>
 	<div class="container">
 		<form method="POST">
 			<div class="form-row">
 				<div class="col">
-					<input type="date" class="form-control" id="date" name="date" placeholder="YYYY-MM-DD">
+					<input type="date" input style="font-size: 1rem" class="form-control" id="date" name="date"
+						placeholder="YYYY-MM-DD">
 				</div>
 
 				<div class="col">
@@ -46,5 +50,5 @@
 		</form>
 	</div>
 </body>
-</html>
 
+</html>

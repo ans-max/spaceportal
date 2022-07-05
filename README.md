@@ -1,4 +1,4 @@
-# spaceportal
+# SpacPortal
 Nasa Apod App in Golang
 
 The code needs a the certs and settings.json to be mapped to the root dir of the app

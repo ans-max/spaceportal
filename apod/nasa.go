@@ -3,10 +3,14 @@ package apod
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"os"
+)
+
+const (
+	settings_file = "/app/settings.json"
 )
 
 type Config struct {
@@ -23,7 +27,7 @@ func LoadConfig(file string) Config {
 		fmt.Println(err.Error())
 	}
 	defer configfile.Close()
-	byteValue, _ := ioutil.ReadAll(configfile)
+	byteValue, _ := io.ReadAll(configfile)
 	json.Unmarshal(byteValue, &c)
 	return c
 }
@@ -40,7 +44,7 @@ type APODResponce struct {
 
 func LookUpAPOD(d string) APODResponce {
 	var a APODResponce
-	c := LoadConfig("/app/settings.json")
+	c := LoadConfig(settings_file)
 	req, _ := http.NewRequest("GET", c.Apod.Apod_end, nil)
 	q := req.URL.Query()
 	q.Add("api_key", c.Apod.Apikey)
@@ -50,8 +54,10 @@ func LookUpAPOD(d string) APODResponce {
 	if err != nil {
 		log.Fatal("Error : ", err)
 	}
-
-	data, err := ioutil.ReadAll(res.Body)
+	if res.StatusCode != 200 {
+		fmt.Println("Return Status: ", res.StatusCode)
+	}
+	data, err := io.ReadAll(res.Body)
 	if err != nil {
 		log.Fatal("Error :", err)
 	}

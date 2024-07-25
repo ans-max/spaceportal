@@ -1,5 +1,5 @@
 # SpacePortal
-Nasa Apod App in Golang
+Nasa Apod App in Go
 
 The code needs a the certs and settings.json to be mapped to the root dir of the app
 
